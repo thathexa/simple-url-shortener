@@ -4,7 +4,7 @@
   $url = $_GET['url'];
 
   // Validate URL
-  if (!preg_match('/^\w+:\/\/(www\.)?[-\w@:%.\+~#=\/]+$/', $url)) {
+  if (!preg_match('/^\w+:\/\/(www\.)?[-\w@:%.\+~#=\/?&]+$/', $url)) {
     http_response_code(400);
     die('Invalid URL');
   }
