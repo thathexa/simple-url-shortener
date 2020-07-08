@@ -11,7 +11,7 @@
 
   $id = rtrim(base64_encode(hash('crc32', $_GET['url'])), '=');
   // Check if id already exists
-  if (!$mysql->query('select id from urls where id = "' . $id . '"')) {
+  if ($mysql->query('select id from urls where id = "' . $id . '"')->num_rows === 0) {
     // Insert new URL into database
     $result = $mysql->query('insert into urls (id, url) values ("' . $id . '", "' . $url . '")');
     if (!$result) {
