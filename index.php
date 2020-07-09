@@ -2,7 +2,7 @@
   if (preg_match('/^[a-zA-Z0-9]{11}$/', $_SERVER['QUERY_STRING'])) {
     require_once 'db.php';
 
-    $result = $mysql->query('select url from urls where id = "' . $_SERVER['QUERY_STRING'] . '"');
+    $result = $db->query('select url from urls where id = "' . $_SERVER['QUERY_STRING'] . '"');
     if ($result and $result->num_rows === 1) {
       header('Location: ' . $result->fetch_assoc()['url']);
       die();
@@ -20,7 +20,6 @@
   </body>
 </html>
     ';
-    $mysql->close();
     die();
   }
 ?>
