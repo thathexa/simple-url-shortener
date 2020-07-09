@@ -1,25 +1,15 @@
 <?php
   if (preg_match('/^[a-zA-Z0-9]{11}$/', $_SERVER['QUERY_STRING'])) {
-    require_once 'db.php';
+    require_once 'include/db.php';
+    require_once 'include/constants.php';
 
     $result = $db->query('select url from urls where id = "' . $_SERVER['QUERY_STRING'] . '"');
     if ($result and $result->num_rows === 1) {
       header('Location: ' . $result->fetch_assoc()['url']);
-      die();
+    } else {
+      http_response_code(HTTP_NOT_FOUND);
+      echo file_get_contents(NOT_FOUND_PAGE);
     }
-
-    echo '
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>URL Not Found</title>
-    <link rel="stylesheet" type="text/css" href="not-found.css" />
-  </head>
-  <body>
-    <h1>The requested URL does not exist :(</h1>
-  </body>
-</html>
-    ';
     die();
   }
 ?>
@@ -29,8 +19,8 @@
   <head>
     <title>URL Shortener</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="main-page.css" />
-    <script type="text/javascript" src="main-page.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/main-page.css" />
+    <script type="text/javascript" src="static/main-page.js"></script>
   </head>
   <body>
     <div class="content-area">
