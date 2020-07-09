@@ -89,7 +89,7 @@
 
     private function exitWithError($message, $error, $errno) {
       http_response_code(HTTP_SERVER_ERROR);
-      die($message . ': ' . $error . ' (' . $errno . ')');
+      die("$message: $error ($errno)");
     }
   }
 

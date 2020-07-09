@@ -5,7 +5,7 @@
 
     $result = $db->getRowById($_GET['id']);
     if ($result->num_rows > 0) {
-      header('Location: ' . $result->fetch_assoc()['url']);
+      header("Location:  {$result->fetch_assoc()['url']}");
     } else {
       http_response_code(HTTP_NOT_FOUND);
       echo file_get_contents(NOT_FOUND_PAGE);

@@ -19,5 +19,5 @@
     $db->addUrl($id, $url); // Insert new URL into database
   }
 
-  echo $_SERVER['SERVER_ADDR'] . '/?id=' . $id;
+  echo "{$_SERVER['SERVER_ADDR']}/?id=$id";
 ?>
