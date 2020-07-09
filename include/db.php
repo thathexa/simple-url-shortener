@@ -19,7 +19,7 @@
       
       // Verify connection success
       if ($this->mysql->connect_error) {
-        $this->exitWithError('MySQL connection failed', $this->mysql->connect_error, $this->mysql->connect_errno);
+        self::exitWithErrorExplicit('MySQL connection failed', $this->mysql->connect_error, $this->mysql->connect_errno);
       }
 
       // Prepare statements
@@ -39,18 +39,18 @@
 
     function getNumberOfUrls() {
       if (!$this->numOfUrlsStmt->execute()) {
-        $this->exitWithError('Statement execution failed', $this->numOfUrlsStmt->error, $this->getUrlStmt->errno);
+        self::exitWithError('Statement execution failed', $this->numOfUrlsStmt);
       }
       return $this->numOfUrlsStmt->get_result()->fetch_row()[0];
     }
 
     function getRowById($id) {
       if (!$this->getByIdStmt->bind_param('s', $id)) {
-        $this->exitWithError('Binding parameters failed', $this->getByIdStmt->error, $this->getByIdStmt->errno);
+        self::exitWithError('Binding parameters failed', $this->getByIdStmt);
       }
 
       if (!$this->getByIdStmt->execute()) {
-        $this->exitWithError('Statement execution failed', $this->getByIdStmt->error, $this->getByIdStmt->errno);
+        self::exitWithError('Statement execution failed', $this->getByIdStmt);
       }
 
       return $this->getByIdStmt->get_result();
@@ -58,11 +58,11 @@
 
     function getRowByUrl($url) {
       if (!$this->getByUrlStmt->bind_param('s', $url)) {
-        $this->exitWithError('Binding parameters failed', $this->getByUrlStmt->error, $this->getByUrlStmt->errno);
+        self::exitWithError('Binding parameters failed', $this->getByUrlStmt);
       }
 
       if (!$this->getByUrlStmt->execute()) {
-        $this->exitWithError('Statement execution failed', $this->getByUrlStmt->error, $this->getByUrlStmt->errno);
+        self::exitWithError('Statement execution failed', $this->getByUrlStmt);
       }
 
       return $this->getByUrlStmt->get_result();
@@ -70,24 +70,28 @@
 
     function addUrl($id, $url) {
       if (!$this->addUrlStmt->bind_param('ss', $id, $url)) {
-        $this->exitWithError('Binding parameters failed', $this->addUrlStmt->error, $this->addUrlStmt->errno);
+        self::exitWithError('Binding parameters failed', $this->addUrlStmt);
       }
 
       if (!$this->addUrlStmt->execute()) {
-        $this->exitWithError('Statement execution failed', $this->addUrlStmt->error, $this->addUrlStmt->errno);
+        self::exitWithError('Statement execution failed', $this->addUrlStmt);
       }
     }
 
     private function prepareStatement($sqlQuery) {
       $stmt = $this->mysql->prepare($sqlQuery);
       if (!$stmt) {
-        $this->exitWithError('Prepare statement failed', $this->mysql->error, $this->mysql->errno);
+        self::exitWithError('Prepare statement failed', $this->mysql->error, $this->mysql->errno);
       }
 
       return $stmt;
     }
 
-    private function exitWithError($message, $error, $errno) {
+    private static function exitWithError($message, $object) {
+      self::exitWithErrorExplicit($message, $object->error, $object->errno);
+    }
+
+    private static function exitWithErrorExplicit($message, $error, $errno) {
       http_response_code(HTTP_SERVER_ERROR);
       die("$message: $error ($errno)");
     }
