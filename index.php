@@ -3,8 +3,8 @@
     require_once 'include/db.php';
     require_once 'include/constants.php';
 
-    $result = $db->query('select url from urls where id = "' . $_SERVER['QUERY_STRING'] . '"');
-    if ($result and $result->num_rows === 1) {
+    $result = $db->getRowById($_SERVER['QUERY_STRING']);
+    if ($result->num_rows > 0) {
       header('Location: ' . $result->fetch_assoc()['url']);
     } else {
       http_response_code(HTTP_NOT_FOUND);
