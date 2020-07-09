@@ -10,12 +10,12 @@
   }
 
   $id = rtrim(base64_encode(hash('crc32', $_GET['url'])), '=');
-  // Check if id already exists
+  // Verify id doesn't already exists
   if ($db->query('select id from urls where id = "' . $id . '"')->num_rows === 0) {
     // Insert new URL into database
     $result = $db->query('insert into urls (id, url) values ("' . $id . '", "' . $url . '")');
     if (!$result) {
-      http_response_code(400);
+      http_response_code(500);
       die('Failed to insert URL into database');
     }
   }
