@@ -6,7 +6,7 @@ Simple web application that shortens any given valid URL address.
 
 1. Download and install xampp
 2. Clone this repo
-3. Replace all existing files in the `lampp/htdocs` folder with all the files from the repo
+3. Replace all existing files in the `htdocs` folder with all the files from the repo
 
 ### Launching the app
 
