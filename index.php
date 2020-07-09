@@ -29,7 +29,7 @@
       <input id="url-input" type="text" placeholder="http://some-long-url.to.short">
       <div class="button-container">
         <p id="response-message"></p>
-        <button onclick="shortenUrl()">Short it!</button>
+        <button id="shorten-button" onclick="shortenUrl()">Short it!</button>
       </div>
     </div>
   </body>
