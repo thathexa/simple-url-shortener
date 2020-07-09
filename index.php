@@ -1,9 +1,9 @@
 <?php
-  if (preg_match('/^[a-zA-Z0-9]{11}$/', $_SERVER['QUERY_STRING'])) {
+  if (isset($_GET['id']) and preg_match('/^[a-zA-Z0-9]{11}$/', $_GET['id'])) {
     require_once 'include/db.php';
     require_once 'include/constants.php';
 
-    $result = $db->getRowById($_SERVER['QUERY_STRING']);
+    $result = $db->getRowById($_GET['id']);
     if ($result->num_rows > 0) {
       header('Location: ' . $result->fetch_assoc()['url']);
     } else {
